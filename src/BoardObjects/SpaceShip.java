@@ -1,6 +1,6 @@
 package BoardObjects;
 
-import Controller.Constans;
+import Controller.Constants;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -9,8 +9,8 @@ public class SpaceShip extends BoardObject{
     SpaceShipBullet bullet;
 
     public SpaceShip(){
-        this.x = Constans.SPACESHIP_INIT_X;
-        this.y = Constans.SPACESHIP_INIT_Y;
+        this.x = Constants.SPACESHIP_INIT_X;
+        this.y = Constants.SPACESHIP_INIT_Y;
         destroyed = false;
         bullet = new SpaceShipBullet(x, y);
         setImage(new ImageIcon("./src/imgs/spaceshipsized.png").getImage());
@@ -32,10 +32,10 @@ public class SpaceShip extends BoardObject{
         if (key == KeyEvent.VK_SPACE && bullet.getDestroyed()) {
             shoot();
         }
-        if (key == KeyEvent.VK_LEFT && x >= Constans.BORDER_LEFT) {
+        if (key == KeyEvent.VK_LEFT && x >= Constants.BORDER_LEFT) {
             moveLeft();
         }
-        if (key == KeyEvent.VK_RIGHT && x <= Constans.BOARD_WIDTH - Constans.BORDER_RIGHT) {
+        if (key == KeyEvent.VK_RIGHT && x <= Constants.BOARD_WIDTH - Constants.BORDER_RIGHT) {
             moveRight();
         }
     }

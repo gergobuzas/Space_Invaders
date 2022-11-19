@@ -17,7 +17,7 @@ import java.util.Random;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 
 
-public class Board extends JPanel{
+public class GameController extends JPanel{
     private ArrayList<AlienShip> aliens;
     private SpaceShip player;
 
@@ -31,14 +31,14 @@ public class Board extends JPanel{
     private final JFrame mainWindow;
 
 
-    public Board(JFrame cWindow) {
-        Constans.BOMB_FREQ = 1000;
+    public GameController(JFrame cWindow) {
+        Constants.BOMB_FREQ = 1000;
         multiplier = 1;
         mainWindow = cWindow;
         addKeyListener(new TAdapter());
         setFocusable(true);
         setBackground(Color.black);
-        timer = new Timer(Constans.DELAY, new GameCycle());
+        timer = new Timer(Constants.DELAY, new GameCycle());
         timer.start();
         newRound();
     }
@@ -47,7 +47,7 @@ public class Board extends JPanel{
         aliens = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
-                AlienShip newAlien = new AlienShip(Constans.ALIEN_INIT_X + 50 * j * 3, Constans.ALIEN_INIT_Y + 50 * i * 2);
+                AlienShip newAlien = new AlienShip(Constants.ALIEN_INIT_X + 50 * j * 3, Constants.ALIEN_INIT_Y + 50 * i * 2);
                 aliens.add(newAlien);
             }
         }
@@ -107,10 +107,10 @@ public class Board extends JPanel{
 
     private void doDrawing(Graphics g) throws IOException {
         g.setColor(Color.black);
-        g.fillRect(0, 0, Constans.BOARD_WIDTH, Constans.BOARD_HEIGHT);
+        g.fillRect(0, 0, Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT);
         g.setColor(Color.lightGray);
         if (inGame) {
-            g.drawLine(0, Constans.GROUND, Constans.BOARD_WIDTH, Constans.GROUND);
+            g.drawLine(0, Constants.GROUND, Constants.BOARD_WIDTH, Constants.GROUND);
             drawAliens(g);
             drawPlayer(g);
             drawPlayerBullet(g);
@@ -159,13 +159,13 @@ public class Board extends JPanel{
 
 
     private void tick() {
-        if (deaths == Constans.NUMBER_OF_ALIENS_TO_DESTROY) {
-            if (Constans.BOMB_FREQ > 200) {
-                Constans.BOMB_FREQ -= 100;
+        if (deaths == Constants.NUMBER_OF_ALIENS_TO_DESTROY) {
+            if (Constants.BOMB_FREQ > 200) {
+                Constants.BOMB_FREQ -= 100;
                 multiplier += 1;
             }
-            else if (Constans.BOMB_FREQ > 50) {
-                Constans.BOMB_FREQ -= 10;
+            else if (Constants.BOMB_FREQ > 50) {
+                Constants.BOMB_FREQ -= 10;
                 multiplier += 3;
             }
             newRound();
@@ -183,8 +183,8 @@ public class Board extends JPanel{
 
                 //Checking whether player's bullet hit an alien
                 if (!alien.getDestroyed() && !player.getBullet().getDestroyed()) {
-                    if (playerBulletX >= (alienX) && playerBulletX <= (alienX + Constans.ALIEN_WIDTH) &&
-                            playerBulletY >= (alienY) && playerBulletY <= (alienY + Constans.ALIEN_HEIGHT)) {
+                    if (playerBulletX >= (alienX) && playerBulletX <= (alienX + Constants.ALIEN_WIDTH) &&
+                            playerBulletY >= (alienY) && playerBulletY <= (alienY + Constants.ALIEN_HEIGHT)) {
                         alien.die();
                         player.getBullet().die();
                         deaths++;
@@ -194,10 +194,10 @@ public class Board extends JPanel{
 
                 //Checking whether player's bullet hit an alien's bullet
                 if (!alien.getBullet().getDestroyed() && !player.getBullet().getDestroyed()) {
-                    if ((playerBulletX >= (alienBulletX) && playerBulletX <= (alienBulletX + Constans.ALIEN_BULLET_WIDTH) &&
-                            playerBulletY >= (alienBulletY) && playerBulletY <= (alienBulletY + Constans.ALIEN_BULLET_HEIGHT)) ||
-                            (alienBulletX >= (playerBulletX) && alienBulletX <= (playerBulletX + Constans.ALIEN_BULLET_WIDTH) &&
-                                    playerBulletY >= (alienBulletY) && playerBulletY <= (alienBulletY + Constans.ALIEN_BULLET_HEIGHT))
+                    if ((playerBulletX >= (alienBulletX) && playerBulletX <= (alienBulletX + Constants.ALIEN_BULLET_WIDTH) &&
+                            playerBulletY >= (alienBulletY) && playerBulletY <= (alienBulletY + Constants.ALIEN_BULLET_HEIGHT)) ||
+                            (alienBulletX >= (playerBulletX) && alienBulletX <= (playerBulletX + Constants.ALIEN_BULLET_WIDTH) &&
+                                    playerBulletY >= (alienBulletY) && playerBulletY <= (alienBulletY + Constants.ALIEN_BULLET_HEIGHT))
                     ) {
                         alien.getBullet().die();
                         player.getBullet().die();
@@ -205,7 +205,7 @@ public class Board extends JPanel{
                 }
             }
 
-            if (player.getBullet().getY() + Constans.MOVE_UP < 0) {
+            if (player.getBullet().getY() + Constants.MOVE_UP < 0) {
                 player.getBullet().die();
             } else {
                 player.getBullet().moveUp();
@@ -215,14 +215,14 @@ public class Board extends JPanel{
         // Aliens ---- dir = -1 left, dir = 1 right
         for (AlienShip alien : aliens) {
             int x = alien.getX();
-            if (x >= Constans.BOARD_WIDTH - Constans.BORDER_RIGHT && direction != -1) {
+            if (x >= Constants.BOARD_WIDTH - Constants.BORDER_RIGHT && direction != -1) {
                 direction = -1;
                 for (AlienShip a : aliens) {
                     a.moveDown();
                 }
             }
 
-            if (x <= Constans.BORDER_LEFT  && direction != 1) {
+            if (x <= Constants.BORDER_LEFT  && direction != 1) {
                 direction = 1;
                 for (AlienShip a : aliens) {
                     a.moveDown();
@@ -232,7 +232,7 @@ public class Board extends JPanel{
 
         for (AlienShip alien : aliens) {
             if (!alien.getDestroyed()) {
-                if (alien.getY() > Constans.GROUND - Constans.ALIEN_HEIGHT) {
+                if (alien.getY() > Constants.GROUND - Constants.ALIEN_HEIGHT) {
                     inGame = false;
                 }
                 alien.move(direction);
@@ -242,7 +242,7 @@ public class Board extends JPanel{
         // AlienBullets
         Random generator = new Random();
         for (AlienShip alien : aliens) {
-            int shotDrop = generator.nextInt(Constans.BOMB_FREQ);
+            int shotDrop = generator.nextInt(Constants.BOMB_FREQ);
             if (shotDrop == 1 && !alien.getDestroyed() && alien.getBullet().getDestroyed()) {
                 alien.shoot();
             }
@@ -252,8 +252,8 @@ public class Board extends JPanel{
             int playerX = player.getX();
             int playerY = player.getY();
             if (!player.getDestroyed() && !alien.getBullet().getDestroyed()) {
-                if (bulletX >= (playerX) && bulletX <= (playerX + Constans.SPACESHIP_WIDTH) && bulletY >= (playerY) &&
-                        bulletY <= (playerY + Constans.SPACESHIP_HEIGHT)) {
+                if (bulletX >= (playerX) && bulletX <= (playerX + Constants.SPACESHIP_WIDTH) && bulletY >= (playerY) &&
+                        bulletY <= (playerY + Constants.SPACESHIP_HEIGHT)) {
                     player.die();
                     inGame = false;
                     alien.getBullet().die();
@@ -262,7 +262,7 @@ public class Board extends JPanel{
 
             if (!alien.getBullet().getDestroyed()) {
                 alien.getBullet().moveDown();
-                if (alien.getBullet().getY() >= Constans.GROUND - Constans.ALIEN_BULLET_HEIGHT) {
+                if (alien.getBullet().getY() >= Constants.GROUND - Constants.ALIEN_BULLET_HEIGHT) {
                     alien.getBullet().die();
                 }
             }

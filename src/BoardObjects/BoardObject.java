@@ -1,6 +1,6 @@
 package BoardObjects;
 
-import Controller.Constans;
+import Controller.Constants;
 
 import java.awt.*;
 
@@ -16,19 +16,19 @@ public class  BoardObject {
     }
 
     public void moveLeft() {
-        moveX(Constans.MOVE_LEFT);
+        moveX(Constants.MOVE_LEFT);
     }
 
     public void moveRight() {
-        moveX(Constans.MOVE_RIGHT);
+        moveX(Constants.MOVE_RIGHT);
     }
 
     public void moveUp(){
-        moveY(Constans.MOVE_UP);
+        moveY(Constants.MOVE_UP);
     }
 
     public void moveDown(){
-        moveY(Constans.MOVE_DOWN);
+        moveY(Constants.MOVE_DOWN);
     }
 
     public void die(){

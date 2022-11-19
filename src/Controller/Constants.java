@@ -1,6 +1,6 @@
 package Controller;
 
-public class Constans {
+public class Constants {
     public static int BOARD_WIDTH = 1000;
     public static int BOARD_HEIGHT = 1000;
     public static int BORDER_RIGHT = 100;
