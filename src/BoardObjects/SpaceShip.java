@@ -12,14 +12,12 @@ public class SpaceShip extends BoardObject{
         this.x = Constans.SPACESHIP_INIT_X;
         this.y = Constans.SPACESHIP_INIT_Y;
         destroyed = false;
-        visible = true;
         bullet = new SpaceShipBullet(x, y);
         setImage(new ImageIcon("./src/imgs/spaceshipsized.png").getImage());
     }
 
     public void shoot(){
         bullet.setDestroyed(false);
-        bullet.setVisible(true);
         bullet.setX(x + 50);
         bullet.setY(y - 30);
     }
@@ -31,7 +29,7 @@ public class SpaceShip extends BoardObject{
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_SPACE && !bullet.getVisible() && bullet.getDestroyed()) {
+        if (key == KeyEvent.VK_SPACE && bullet.getDestroyed()) {
             shoot();
         }
         if (key == KeyEvent.VK_LEFT && x >= Constans.BORDER_LEFT) {

@@ -9,12 +9,10 @@ public class  BoardObject {
     int y;
     Image img;
     Boolean destroyed;
-    Boolean visible;
 
 
     public BoardObject(){
         destroyed = false;
-        visible = true;
     }
 
     public void moveLeft() {
@@ -34,7 +32,6 @@ public class  BoardObject {
     }
 
     public void die(){
-        visible = false;
         destroyed = true;
     }
 
@@ -46,9 +43,6 @@ public class  BoardObject {
         this.destroyed = bool;
     }
 
-    public boolean getVisible(){
-        return this.visible;
-    }
 
     public void setImage(Image image) {
 
@@ -58,10 +52,6 @@ public class  BoardObject {
     public Image getImage() {
 
         return img;
-    }
-
-    public void setVisible(boolean bool){
-        this.visible = bool;
     }
 
     public void moveX(int num){

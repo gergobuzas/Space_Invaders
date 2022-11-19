@@ -60,23 +60,22 @@ public class Board extends JPanel{
     //DRAWINGS
     private void drawAliens(Graphics g) {
         for (AlienShip alien : aliens) {
-            if (alien.getVisible()) {
-                g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
-            }
             if (alien.getDestroyed()) {
                 alien.die();
             }
+            else
+                g.drawImage(alien.getImage(), alien.getX(), alien.getY(), this);
         }
     }
 
     private void drawPlayer(Graphics g) {
-        if (player.getVisible()) {
+        if (!player.getDestroyed()) {
             g.drawImage(player.getImage(), player.getX(), player.getY(), this);
         }
     }
 
     private void drawPlayerBullet(Graphics g) {
-        if (player.getBullet().getVisible()) {
+        if (!player.getBullet().getDestroyed()) {
             g.drawImage(player.getBullet().getImage(), player.getBullet().getX(), player.getBullet().getY(), this);
         }
     }
@@ -173,7 +172,7 @@ public class Board extends JPanel{
         }
 
         // player's bullet
-        if (player.getBullet().getVisible()) {
+        if (!player.getBullet().getDestroyed()) {
             int playerBulletX = player.getBullet().getX();
             int playerBulletY = player.getBullet().getY();
             for (AlienShip alien : aliens) {
@@ -183,7 +182,7 @@ public class Board extends JPanel{
                 int alienBulletY = alien.getBullet().getY();
 
                 //Checking whether player's bullet hit an alien
-                if (alien.getVisible() && player.getBullet().getVisible()) {
+                if (!alien.getDestroyed() && !player.getBullet().getDestroyed()) {
                     if (playerBulletX >= (alienX) && playerBulletX <= (alienX + Constans.ALIEN_WIDTH) &&
                             playerBulletY >= (alienY) && playerBulletY <= (alienY + Constans.ALIEN_HEIGHT)) {
                         alien.die();
@@ -194,7 +193,7 @@ public class Board extends JPanel{
                 }
 
                 //Checking whether player's bullet hit an alien's bullet
-                if (alien.getBullet().getVisible() && player.getBullet().getVisible()) {
+                if (!alien.getBullet().getDestroyed() && !player.getBullet().getDestroyed()) {
                     if ((playerBulletX >= (alienBulletX) && playerBulletX <= (alienBulletX + Constans.ALIEN_BULLET_WIDTH) &&
                             playerBulletY >= (alienBulletY) && playerBulletY <= (alienBulletY + Constans.ALIEN_BULLET_HEIGHT)) ||
                             (alienBulletX >= (playerBulletX) && alienBulletX <= (playerBulletX + Constans.ALIEN_BULLET_WIDTH) &&
@@ -232,7 +231,7 @@ public class Board extends JPanel{
         }
 
         for (AlienShip alien : aliens) {
-            if (alien.getVisible()) {
+            if (!alien.getDestroyed()) {
                 if (alien.getY() > Constans.GROUND - Constans.ALIEN_HEIGHT) {
                     inGame = false;
                 }
@@ -244,7 +243,7 @@ public class Board extends JPanel{
         Random generator = new Random();
         for (AlienShip alien : aliens) {
             int shotDrop = generator.nextInt(Constans.BOMB_FREQ);
-            if (shotDrop == 1 && alien.getVisible() && alien.getBullet().getDestroyed()) {
+            if (shotDrop == 1 && !alien.getDestroyed() && alien.getBullet().getDestroyed()) {
                 alien.shoot();
             }
 
@@ -252,7 +251,7 @@ public class Board extends JPanel{
             int bulletY = alien.getBullet().getY();
             int playerX = player.getX();
             int playerY = player.getY();
-            if (player.getVisible() && !alien.getBullet().getDestroyed()) {
+            if (!player.getDestroyed() && !alien.getBullet().getDestroyed()) {
                 if (bulletX >= (playerX) && bulletX <= (playerX + Constans.SPACESHIP_WIDTH) && bulletY >= (playerY) &&
                         bulletY <= (playerY + Constans.SPACESHIP_HEIGHT)) {
                     player.die();

@@ -23,7 +23,6 @@ public class AlienShip extends BoardObject{
 
     public void shoot(){
         bullet.setDestroyed(false);
-        bullet.setVisible(true);
         bullet.setX(x + 20);
         bullet.setY(y);
     }

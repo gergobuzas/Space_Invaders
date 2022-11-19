@@ -8,7 +8,6 @@ public class SpaceShipBullet extends BoardObject {
         this.x = cx;
         this.y = cy;
         destroyed = true;
-        visible = false;
         setImage(new ImageIcon("src/imgs/spaceshipbulletsized.png").getImage());
     }
 

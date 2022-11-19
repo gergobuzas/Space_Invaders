@@ -8,7 +8,6 @@ public class AlienBullet extends BoardObject{
         this.x = x;
         this.y = y;
         destroyed = true;
-        visible = false;
         setImage(new ImageIcon("./src/imgs/alienbulletsized.png").getImage());
     }
 
