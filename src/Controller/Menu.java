@@ -4,12 +4,15 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class Menu extends JPanel {
+    LeaderBoard leaderBoard;
 
     public Menu() throws IOException {
+        leaderBoard = new LeaderBoard();
         JMenu fileMenu = new JMenu ("File");
         JMenuItem newGameItem = new JMenuItem ("New Game");
         JMenuItem leaderboardItem = new JMenuItem ("Leaderboard");
@@ -28,7 +31,6 @@ public class Menu extends JPanel {
         menuBar.add (fileMenu);
         menuBar.add (helpMenu);
 
-        //construct components
         JButton playButton = new JButton("Play");
         JButton leaderBoardButton = new JButton("Leaderboard");
         JButton exitButton = new JButton("Exit");
@@ -54,28 +56,58 @@ public class Menu extends JPanel {
         titleLabel.setBounds (0, 30, 820, 350);
 
         //add action listeners
-        playButton.addActionListener (e -> {
-            SpaceInvaders game = new SpaceInvaders();
-            game.setVisible(true);
-        });
+        playButton.addActionListener (e -> play());
 
-        leaderBoardButton.addActionListener (e -> {
-            try {
-                LeaderBoard.main();
-            } catch (IOException | ClassNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
+        leaderBoardButton.addActionListener (e -> leaderboard());
 
-        exitButton.addActionListener (e -> {
+        exitButton.addActionListener (e -> exit());
+
+        newGameItem.addActionListener (e -> play());
+
+        leaderboardItem.addActionListener (e -> leaderboard());
+
+        exitItem.addActionListener (e -> exit());
+
+        contentsItem.addActionListener (e -> {
             try {
-                LeaderBoard.save();
+                contents();
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            System.exit(0);
         });
 
+        aboutItem.addActionListener (e -> about());
+    }
+
+    private void play() {
+        SpaceInvaders game = new SpaceInvaders();
+        game.setVisible(true);
+    }
+
+    private void leaderboard(){
+        try {
+            LeaderBoard.main();
+        } catch (IOException | ClassNotFoundException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private void exit(){
+        try {
+            LeaderBoard.save();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        System.exit(0);
+    }
+
+    private void contents() throws IOException {
+        Desktop.getDesktop().browse(URI.create("https://github.com/gergobuzas/Space_Invaders"));
+    }
+
+    private void about(){
+        JOptionPane.showMessageDialog(null, "This game was created by Gergo Buzas for the Introduction" +
+                "to Programming 3 course at the Budapest University of Technology and Economics.\nContact me at buzasgergo0615@gmail.com");
     }
 
     public static void main () throws IOException {

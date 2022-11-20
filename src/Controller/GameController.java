@@ -121,12 +121,31 @@ public class GameController extends JPanel{
             if (timer.isRunning()) {
                 timer.stop();
             }
-            gameOver(mainWindow);
+            gameOver();
         }
         Toolkit.getDefaultToolkit().sync();
     }
 
-    private void gameOver(JFrame mainWindow) throws IOException {
+    private void gameOver() throws IOException {
+        for (int i = 0; i < LeaderBoard.getTop10List().size(); i++) {
+            if (score > LeaderBoard.getTop10List().get(i).getScore()) {
+                gameOverTop10(i);
+                return;
+            }
+        }
+        gameOverNotTop10(this.mainWindow);
+    }
+
+
+    private void gameOverTop10(int idx) throws IOException {
+        String name = JOptionPane.showInputDialog("You got a new high score! Enter your name: ");
+        LeaderBoard.getTop10List().add(idx, new LeaderBoard.Score(name, score));
+        LeaderBoard.getTop10List().remove(10);
+        LeaderBoard.save();
+        mainWindow.setVisible(false);
+    }
+
+    private void gameOverNotTop10(JFrame mainWindow) throws IOException {
         JFrame gameOverWindow = new JFrame();
         JPanel gameOverScreen = new JPanel();
         JButton okButton =  new JButton("OK");
@@ -149,8 +168,8 @@ public class GameController extends JPanel{
         gameOverWindow.setLocationRelativeTo(null);
         gameOverWindow.setVisible(true);
         gameOverWindow.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-
     }
+
 
 
 

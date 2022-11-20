@@ -9,6 +9,11 @@ public class LeaderBoard extends JPanel {
     JFrame mainWindow;
     static ArrayList<Score> top10List;
 
+    public LeaderBoard() {
+        top10List = new ArrayList<>();
+        LeaderBoard.load();
+    }
+
     public LeaderBoard(JFrame cmainWindow) {
         JButton okButton = new JButton("OK");
         JList<String> top10JList = new JList<>();
@@ -16,8 +21,28 @@ public class LeaderBoard extends JPanel {
         mainWindow = cmainWindow;
         setPreferredSize (new Dimension(400, 600));
         setLayout(new GridLayout(2, 1, 0, 0));
+        LeaderBoard.load();
+        top10JList.setFont(new Font("Arial", Font.PLAIN, 20));
+        top10JList.setListData(new String[]{
+                "1.     " + top10List.get(0).getName() + "    " + top10List.get(0).getScore(),
+                "2.     " + top10List.get(1).getName() + "    " + top10List.get(1).getScore(),
+                "3.     " + top10List.get(2).getName() + "    " + top10List.get(2).getScore(),
+                "4.     " + top10List.get(3).getName() + "    " + top10List.get(3).getScore(),
+                "5.     " + top10List.get(4).getName() + "    " + top10List.get(4).getScore(),
+                "6.     " + top10List.get(5).getName() + "    " + top10List.get(5).getScore(),
+                "7.     " + top10List.get(6).getName() + "    " + top10List.get(6).getScore(),
+                "8.     " + top10List.get(7).getName() + "    " + top10List.get(7).getScore(),
+                "9.     " + top10List.get(8).getName() + "    " + top10List.get(8).getScore(),
+                "10.   " + top10List.get(9).getName() + "    " + top10List.get(9).getScore()
+        });
 
-        //Read from file named top10.txt serialized list of top 10 players
+        add(top10JList);
+        add(okButton);
+
+        okButton.addActionListener(e -> mainWindow.setVisible(false));
+    }
+
+    private static void load() {
         try {
             FileInputStream fileInputStream = new FileInputStream("top10.txt");
             ObjectInputStream in = new ObjectInputStream(fileInputStream);
@@ -49,26 +74,6 @@ public class LeaderBoard extends JPanel {
         catch (IOException | ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
-
-        top10JList.setFont(new Font("Arial", Font.PLAIN, 20));
-        top10JList.setListData(new String[]{
-                "1.     " + top10List.get(0).getName() + "    " + top10List.get(0).getScore(),
-                "2.     " + top10List.get(1).getName() + "    " + top10List.get(1).getScore(),
-                "3.     " + top10List.get(2).getName() + "    " + top10List.get(2).getScore(),
-                "4.     " + top10List.get(3).getName() + "    " + top10List.get(3).getScore(),
-                "5.     " + top10List.get(4).getName() + "    " + top10List.get(4).getScore(),
-                "6.     " + top10List.get(5).getName() + "    " + top10List.get(5).getScore(),
-                "7.     " + top10List.get(6).getName() + "    " + top10List.get(6).getScore(),
-                "8.     " + top10List.get(7).getName() + "    " + top10List.get(7).getScore(),
-                "9.     " + top10List.get(8).getName() + "    " + top10List.get(8).getScore(),
-                "10.   " + top10List.get(9).getName() + "    " + top10List.get(9).getScore()
-        });
-
-
-        add(top10JList);
-        add(okButton);
-
-        okButton.addActionListener(e -> mainWindow.setVisible(false));
     }
 
     public static void save() throws IOException {
@@ -81,7 +86,7 @@ public class LeaderBoard extends JPanel {
         fileOutputStream.close();
     }
 
-    public ArrayList<Score> getTop10List() {
+    public static ArrayList<Score> getTop10List() {
         return top10List;
     }
 
@@ -93,6 +98,9 @@ public class LeaderBoard extends JPanel {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
+
+
+
 
     public static class Score implements Serializable {
         private final String name;
