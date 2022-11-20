@@ -20,8 +20,8 @@ public class GameController extends JPanel{
     SpaceShip player;
 
     Direction direction = Direction.LEFT;
-    int deaths = 0;
-    int score = 0;
+    int deaths;
+    int score;
     int multiplier;
 
     boolean inGame = true;
@@ -32,6 +32,8 @@ public class GameController extends JPanel{
     public GameController(JFrame cWindow) {
         Constants.BOMB_FREQ = 1000;
         multiplier = 1;
+        deaths = 0;
+        score = 0;
         mainWindow = cWindow;
         addKeyListener(new TAdapter());
         setFocusable(true);
