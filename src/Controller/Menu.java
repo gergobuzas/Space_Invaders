@@ -6,32 +6,32 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class Menu extends JPanel {
 
     public Menu() throws IOException {
-        //construct preComponents
         JMenu fileMenu = new JMenu ("File");
-        JMenuItem new_gameItem = new JMenuItem ("New Game");
-        fileMenu.add (new_gameItem);
+        JMenuItem newGameItem = new JMenuItem ("New Game");
         JMenuItem leaderboardItem = new JMenuItem ("Leaderboard");
-        fileMenu.add (leaderboardItem);
         JMenuItem exitItem = new JMenuItem ("Exit");
+        fileMenu.add (newGameItem);
+        fileMenu.add (leaderboardItem);
         fileMenu.add (exitItem);
+
         JMenu helpMenu = new JMenu ("Help");
         JMenuItem contentsItem = new JMenuItem ("Contents");
-        helpMenu.add (contentsItem);
         JMenuItem aboutItem = new JMenuItem ("About");
+        helpMenu.add (contentsItem);
         helpMenu.add (aboutItem);
+
+        JMenuBar menuBar = new JMenuBar();
+        menuBar.add (fileMenu);
+        menuBar.add (helpMenu);
 
         //construct components
         JButton playButton = new JButton("Play");
         JButton leaderBoardButton = new JButton("Leaderboard");
         JButton exitButton = new JButton("Exit");
-        JMenuBar menuBar = new JMenuBar();
-        menuBar.add (fileMenu);
-        menuBar.add (helpMenu);
         BufferedImage myPicture = ImageIO.read(new File("./src/imgs/logo.png"));
         JLabel titleLabel = new JLabel(new ImageIcon(myPicture));
 
@@ -60,10 +60,19 @@ public class Menu extends JPanel {
         });
 
         leaderBoardButton.addActionListener (e -> {
-                System.out.println ("Leaderboard was pressed.");
+            try {
+                LeaderBoard.main();
+            } catch (IOException | ClassNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
         });
 
         exitButton.addActionListener (e -> {
+            try {
+                LeaderBoard.save();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
             System.exit(0);
         });
 
@@ -71,7 +80,7 @@ public class Menu extends JPanel {
 
     public static void main () throws IOException {
         JFrame frame = new JFrame ("Space Invaders");
-        frame.setDefaultCloseOperation (EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation (WindowConstants.DO_NOTHING_ON_CLOSE);
         frame.getContentPane().add (new Menu());
         frame.pack();
         frame.setLocationRelativeTo(null);
