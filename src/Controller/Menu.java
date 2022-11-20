@@ -37,7 +37,6 @@ public class Menu extends JPanel {
         BufferedImage myPicture = ImageIO.read(new File("./src/imgs/logo.png"));
         JLabel titleLabel = new JLabel(new ImageIcon(myPicture));
 
-        //adjust size and set layout
         setPreferredSize (new Dimension (800, 700));
         setLayout (null);
 
@@ -48,7 +47,6 @@ public class Menu extends JPanel {
         add (menuBar);
         add (titleLabel);
 
-        //set component bounds (only needed by Absolute Positioning)
         playButton.setBounds (155, 395, 495, 155);
         leaderBoardButton.setBounds (155, 565, 300, 115);
         exitButton.setBounds (470, 565, 180, 115);
@@ -57,17 +55,11 @@ public class Menu extends JPanel {
 
         //add action listeners
         playButton.addActionListener (e -> play());
-
         leaderBoardButton.addActionListener (e -> leaderboard());
-
         exitButton.addActionListener (e -> exit());
-
         newGameItem.addActionListener (e -> play());
-
         leaderboardItem.addActionListener (e -> leaderboard());
-
         exitItem.addActionListener (e -> exit());
-
         contentsItem.addActionListener (e -> {
             try {
                 contents();
@@ -75,7 +67,6 @@ public class Menu extends JPanel {
                 throw new RuntimeException(ex);
             }
         });
-
         aboutItem.addActionListener (e -> about());
     }
 
@@ -106,8 +97,8 @@ public class Menu extends JPanel {
     }
 
     private void about(){
-        JOptionPane.showMessageDialog(null, "This game was created by Gergo Buzas for the Introduction" +
-                "to Programming 3 course at the Budapest University of Technology and Economics.\nContact me at buzasgergo0615@gmail.com");
+        JOptionPane.showMessageDialog(null, "This game was created by Gergo Buzas for the \"Introduction " +
+                "to Programming 3\" course at the Budapest University of Technology and Economics.\nContact me at \"buzasgergo0615@gmail.com\"");
     }
 
     public static void main () throws IOException {

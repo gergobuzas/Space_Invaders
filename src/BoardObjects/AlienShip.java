@@ -1,5 +1,7 @@
 package BoardObjects;
 
+import Controller.GameController;
+
 import javax.swing.*;
 
 public class AlienShip extends BoardObject{
@@ -12,8 +14,8 @@ public class AlienShip extends BoardObject{
         bullet = new AlienBullet(x, y);
     }
 
-    public void move(int direction){
-        if( direction == -1){
+    public void move(GameController.Direction direction){
+        if( direction == GameController.Direction.LEFT){
             moveLeft();
         }
         else {
@@ -23,8 +25,8 @@ public class AlienShip extends BoardObject{
 
     public void shoot(){
         bullet.setDestroyed(false);
-        bullet.setX(x + 20);
-        bullet.setY(y);
+        bullet.setX(x);
+        bullet.setY(y - 20);
     }
 
 

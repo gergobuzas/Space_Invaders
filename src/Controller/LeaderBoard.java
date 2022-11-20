@@ -22,19 +22,17 @@ public class LeaderBoard extends JPanel {
         setPreferredSize (new Dimension(400, 600));
         setLayout(new GridLayout(2, 1, 0, 0));
         LeaderBoard.load();
+
         top10JList.setFont(new Font("Arial", Font.PLAIN, 20));
-        top10JList.setListData(new String[]{
-                "1.     " + top10List.get(0).getName() + "    " + top10List.get(0).getScore(),
-                "2.     " + top10List.get(1).getName() + "    " + top10List.get(1).getScore(),
-                "3.     " + top10List.get(2).getName() + "    " + top10List.get(2).getScore(),
-                "4.     " + top10List.get(3).getName() + "    " + top10List.get(3).getScore(),
-                "5.     " + top10List.get(4).getName() + "    " + top10List.get(4).getScore(),
-                "6.     " + top10List.get(5).getName() + "    " + top10List.get(5).getScore(),
-                "7.     " + top10List.get(6).getName() + "    " + top10List.get(6).getScore(),
-                "8.     " + top10List.get(7).getName() + "    " + top10List.get(7).getScore(),
-                "9.     " + top10List.get(8).getName() + "    " + top10List.get(8).getScore(),
-                "10.   " + top10List.get(9).getName() + "    " + top10List.get(9).getScore()
-        });
+        ArrayList<String> lines = new ArrayList<>();
+        for (int i = 0; i < top10List.size(); i++){
+            String name = top10List.get(i).getName();
+            String score = Integer.toString(top10List.get(i).getScore());
+            String place = Integer.toString(i + 1);
+            String line = place + ". " + name + " - " + score;
+            lines.add(line);
+        }
+        top10JList.setListData(lines.toArray(new String[0]));
 
         add(top10JList);
         add(okButton);

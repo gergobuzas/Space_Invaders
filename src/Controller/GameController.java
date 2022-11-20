@@ -14,21 +14,19 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
-
 
 public class GameController extends JPanel{
-    private ArrayList<AlienShip> aliens;
-    private SpaceShip player;
+    ArrayList<AlienShip> aliens;
+    SpaceShip player;
 
-    private int direction = -1;
-    private int deaths = 0;
-    private int score = 0;
-    private int multiplier;
+    Direction direction = Direction.LEFT;
+    int deaths = 0;
+    int score = 0;
+    int multiplier;
 
-    private boolean inGame = true;
-    private final Timer timer;
-    private final JFrame mainWindow;
+    boolean inGame = true;
+    final Timer timer;
+    final JFrame mainWindow;
 
 
     public GameController(JFrame cWindow) {
@@ -138,7 +136,7 @@ public class GameController extends JPanel{
 
 
     private void gameOverTop10(int idx) throws IOException {
-        String name = JOptionPane.showInputDialog("You got a new high score! Enter your name: ");
+        String name = JOptionPane.showInputDialog("You got the "+ (idx + 1) + ". highest score!\nEnter your name:");
         LeaderBoard.getTop10List().add(idx, new LeaderBoard.Score(name, score));
         LeaderBoard.getTop10List().remove(10);
         LeaderBoard.save();
@@ -167,7 +165,7 @@ public class GameController extends JPanel{
         gameOverWindow.setTitle("Game Over");
         gameOverWindow.setLocationRelativeTo(null);
         gameOverWindow.setVisible(true);
-        gameOverWindow.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        gameOverWindow.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
 
 
@@ -234,15 +232,15 @@ public class GameController extends JPanel{
         // Aliens ---- dir = -1 left, dir = 1 right
         for (AlienShip alien : aliens) {
             int x = alien.getX();
-            if (x >= Constants.BOARD_WIDTH - Constants.BORDER_RIGHT && direction != -1) {
-                direction = -1;
+            if (x >= Constants.BOARD_WIDTH - Constants.BORDER_RIGHT && direction != Direction.LEFT) {
+                direction = Direction.LEFT;
                 for (AlienShip a : aliens) {
                     a.moveDown();
                 }
             }
 
-            if (x <= Constants.BORDER_LEFT  && direction != 1) {
-                direction = 1;
+            if (x <= Constants.BORDER_LEFT  && direction != Direction.RIGHT) {
+                direction = Direction.RIGHT;
                 for (AlienShip a : aliens) {
                     a.moveDown();
                 }
@@ -305,5 +303,9 @@ public class GameController extends JPanel{
         public void keyPressed(KeyEvent e) {
             player.keyPressed(e);
         }
+    }
+
+    public enum Direction {
+        LEFT, RIGHT
     }
 }
