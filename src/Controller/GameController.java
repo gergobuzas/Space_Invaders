@@ -229,7 +229,7 @@ public class GameController extends JPanel{
             }
         }
 
-        // Aliens ---- dir = -1 left, dir = 1 right
+        // Aliens
         for (AlienShip alien : aliens) {
             int x = alien.getX();
             if (x >= Constants.BOARD_WIDTH - Constants.BORDER_RIGHT && direction != Direction.LEFT) {
