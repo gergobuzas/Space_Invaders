@@ -92,7 +92,7 @@ public class Menu extends JPanel {
      * This method starts a new game.
      * @author Gergo Buzas
      */
-    private void play() {
+    public void play() {
         SpaceInvaders game = new SpaceInvaders();
         game.setVisible(true);
     }
@@ -101,7 +101,7 @@ public class Menu extends JPanel {
      * This method opens the leaderboard.
      * @author Gergo Buzas
      */
-    private void leaderboard(){
+    public void leaderboard(){
         try {
             LeaderBoard.main();
         } catch (IOException | ClassNotFoundException ex) {
@@ -114,7 +114,7 @@ public class Menu extends JPanel {
      * It saves the leaderboard before closing.
      * @author Gergo Buzas
      */
-    private void exit(){
+    public void exit(){
         try {
             LeaderBoard.save();
         } catch (IOException ex) {
@@ -128,7 +128,7 @@ public class Menu extends JPanel {
      * @author Gergo Buzas
      * @throws IOException If the page cannot be opened.
      */
-    private void contents() throws IOException {
+    public void contents() throws IOException {
         Desktop.getDesktop().browse(URI.create("https://github.com/gergobuzas/Space_Invaders"));
     }
 
@@ -136,7 +136,7 @@ public class Menu extends JPanel {
      * This method opens the game's "about" info.
      * @author Gergo Buzas
      */
-    private void about(){
+    public void about(){
         JOptionPane.showMessageDialog(null, "This game was created by Gergo Buzas for the \"Introduction " +
                 "to Programming 3\" course at the Budapest University of Technology and Economics.\nContact me at \"buzasgergo0615@gmail.com\"");
     }

@@ -67,7 +67,7 @@ public class GameController extends JPanel{
      * It also resets the aliens' death counter.
      * @author Gergo Buzas
      */
-    private void newRound() {
+    public void newRound() {
         aliens = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 6; j++) {
@@ -85,7 +85,7 @@ public class GameController extends JPanel{
      * @param g The graphics object of the game. It is used to draw the aliens.
      * @author Gergo Buzas
      */
-    private void drawAliens(Graphics g) {
+    public void drawAliens(Graphics g) {
         for (AlienShip alien : aliens) {
             if (alien.getDestroyed()) {
                 alien.die();
@@ -100,7 +100,7 @@ public class GameController extends JPanel{
      * @param g The graphics object of the game. It is used to draw the player's ship.
      * @author Gergo Buzas
      */
-    private void drawPlayer(Graphics g) {
+    public void drawPlayer(Graphics g) {
         if (!player.getDestroyed()) {
             g.drawImage(player.getImage(), player.getX(), player.getY(), this);
         }
@@ -111,7 +111,7 @@ public class GameController extends JPanel{
      * @param g The graphics object of the game. It is used to draw the bullet.
      * @author Gergo Buzas
      */
-    private void drawPlayerBullet(Graphics g) {
+    public void drawPlayerBullet(Graphics g) {
         if (!player.getBullet().getDestroyed()) {
             g.drawImage(player.getBullet().getImage(), player.getBullet().getX(), player.getBullet().getY(), this);
         }
@@ -122,7 +122,7 @@ public class GameController extends JPanel{
      * @param g The graphics object. It is used to draw the bullets.
      * @author Gergo Buzas
      */
-    private void drawAlienBullets(Graphics g) {
+    public void drawAlienBullets(Graphics g) {
         for (AlienShip alien : aliens) {
             AlienBullet b = alien.getBullet();
             if (!b.getDestroyed()) {
@@ -136,7 +136,7 @@ public class GameController extends JPanel{
      * @param g The graphics object of the game. It is used to draw the score.
      * @author Gergo Buzas
      */
-    private void drawScore(Graphics g) {
+    public void drawScore(Graphics g) {
         g.setColor(Color.white);
         g.setFont(new Font("Helvetica", Font.BOLD, 20));
         g.drawString("Score: " + score, 30, 935);
@@ -165,7 +165,7 @@ public class GameController extends JPanel{
      * @throws IOException If the image file is not found.
      * @author Gergo Buzas
      */
-    private void doDrawing(Graphics g) throws IOException {
+    public void doDrawing(Graphics g) throws IOException {
         g.setColor(Color.black);
         g.fillRect(0, 0, Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT);
         g.setColor(Color.lightGray);
@@ -194,7 +194,7 @@ public class GameController extends JPanel{
      * @throws IOException If the image file is not found.
      * @author Gergo Buzas
      */
-    private void gameOver() throws IOException {
+    public void gameOver() throws IOException {
         for (int i = 0; i < LeaderBoard.getTop10List().size(); i++) {
             if (score > LeaderBoard.getTop10List().get(i).getScore()) {
                 gameOverTop10(i);
@@ -210,7 +210,7 @@ public class GameController extends JPanel{
      * @throws IOException If the score cannot be saved to top10.txt
      * @author Gergo Buzas
      */
-    private void gameOverTop10(int idx) throws IOException {
+    public void gameOverTop10(int idx) throws IOException {
         String name = JOptionPane.showInputDialog("You got the "+ (idx + 1) + ". highest score!\nEnter your name:");
         LeaderBoard.getTop10List().add(idx, new LeaderBoard.Score(name, score));
         LeaderBoard.getTop10List().remove(10);
@@ -224,7 +224,7 @@ public class GameController extends JPanel{
      * @throws IOException If the image file is not found.
      * @author Gergo Buzas
      */
-    private void gameOverNotTop10(JFrame mainWindow) throws IOException {
+    public void gameOverNotTop10(JFrame mainWindow) throws IOException {
         JFrame gameOverWindow = new JFrame();
         JPanel gameOverScreen = new JPanel();
         JButton okButton =  new JButton("OK");
@@ -269,7 +269,7 @@ public class GameController extends JPanel{
      * It checks if the aliens hit the ground.
      * @author Gergo Buzas
      */
-    private void tick() {
+    public void tick() {
         if (deaths == Constants.NUMBER_OF_ALIENS_TO_DESTROY) {
             if (Constants.BOMB_FREQ > 200) {
                 Constants.BOMB_FREQ -= 100;
@@ -387,7 +387,7 @@ public class GameController extends JPanel{
      * It repaints the game.
      * @author Gergo Buzas
      */
-    private void doGameCycle() {
+    public void doGameCycle() {
         tick();
         repaint();
     }
@@ -396,7 +396,7 @@ public class GameController extends JPanel{
      * This method represents the game's cycle.
      * @author Gergo Buzas
      */
-    private class GameCycle implements ActionListener {
+    public class GameCycle implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             doGameCycle();
@@ -408,7 +408,7 @@ public class GameController extends JPanel{
      * This class is used to handle the keyboard input.
      * @author Gergo Buzas
      */
-    private class TAdapter extends KeyAdapter {
+    public class TAdapter extends KeyAdapter {
         /**
          * This method is called when a key is pressed.
          * @param e the event to be processed
