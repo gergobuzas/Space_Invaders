@@ -1,6 +1,11 @@
 package Controller;
 import javax.swing.*;
 
+/**
+ * This class represents the window of the game.
+ * @author Gergo Buzas
+ * @see JFrame
+ */
 public class SpaceInvaders extends JFrame {
     public SpaceInvaders() {
         add(new GameController(this));

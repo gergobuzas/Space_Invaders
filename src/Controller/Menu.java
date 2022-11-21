@@ -8,9 +8,27 @@ import java.net.URI;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/**
+ * This class represents the main menu of the game.
+ * It extends the JPanel class.
+ * It contains the attributes and methods for the main menu.
+ * @author Gergo Buzas
+ * @see javax.swing.JPanel
+ */
 public class Menu extends JPanel {
     LeaderBoard leaderBoard;
 
+    /**
+     * This method is the constructor of the class.
+     * It initializes the attributes of the class.
+     * It adds the JMenuItem's to the JMenuBar.
+     * It adds the JMenuBar to the JPanel.
+     * It adds the buttons to the JPanel.
+     * It adds the action listeners to the buttons.
+     * It adds the action listeners to the JMenuItem's.
+     * @author Gergo Buzas
+     * @throws IOException If the Space Invaders image file is not found.
+     */
     public Menu() throws IOException {
         leaderBoard = new LeaderBoard();
         JMenu fileMenu = new JMenu ("File");
@@ -70,11 +88,19 @@ public class Menu extends JPanel {
         aboutItem.addActionListener (e -> about());
     }
 
+    /**
+     * This method starts a new game.
+     * @author Gergo Buzas
+     */
     private void play() {
         SpaceInvaders game = new SpaceInvaders();
         game.setVisible(true);
     }
 
+    /**
+     * This method opens the leaderboard.
+     * @author Gergo Buzas
+     */
     private void leaderboard(){
         try {
             LeaderBoard.main();
@@ -83,6 +109,11 @@ public class Menu extends JPanel {
         }
     }
 
+    /**
+     * This method exits the game.
+     * It saves the leaderboard before closing.
+     * @author Gergo Buzas
+     */
     private void exit(){
         try {
             LeaderBoard.save();
@@ -92,15 +123,31 @@ public class Menu extends JPanel {
         System.exit(0);
     }
 
+    /**
+     * This method opens the game's GitHub page.
+     * @author Gergo Buzas
+     * @throws IOException If the page cannot be opened.
+     */
     private void contents() throws IOException {
         Desktop.getDesktop().browse(URI.create("https://github.com/gergobuzas/Space_Invaders"));
     }
 
+    /**
+     * This method opens the game's "about" info.
+     * @author Gergo Buzas
+     */
     private void about(){
         JOptionPane.showMessageDialog(null, "This game was created by Gergo Buzas for the \"Introduction " +
                 "to Programming 3\" course at the Budapest University of Technology and Economics.\nContact me at \"buzasgergo0615@gmail.com\"");
     }
 
+    /**
+     * This method is the main method of the Menu.
+     * It creates a new JFrame and adds the Menu to it.
+     * It sets the JFrame's attributes.
+     * @author Gergo Buzas
+     * @throws IOException If the Space Invaders image file is not found.
+     */
     public static void main () throws IOException {
         JFrame frame = new JFrame ("Space Invaders");
         frame.setDefaultCloseOperation (WindowConstants.DO_NOTHING_ON_CLOSE);

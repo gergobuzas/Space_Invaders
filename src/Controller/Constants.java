@@ -1,5 +1,10 @@
 package Controller;
 
+
+/**
+ * This class contains the constants of the game. It makes the handling of the constants and the code easier.
+ * @author Gergo Buzas
+ */
 public class Constants {
     public static int BOARD_WIDTH = 1000;
     public static int BOARD_HEIGHT = 1000;

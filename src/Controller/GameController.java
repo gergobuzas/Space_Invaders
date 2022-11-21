@@ -14,7 +14,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-
+/**
+ * This class represents the game.
+ * The game is a JPanel.
+ * It contains the attributes and methods for the game.
+ * @author Gergo Buzas
+ * @see javax.swing.JPanel
+ */
 public class GameController extends JPanel{
     ArrayList<AlienShip> aliens;
     SpaceShip player;
@@ -29,6 +35,16 @@ public class GameController extends JPanel{
     final JFrame mainWindow;
 
 
+    /**
+     * This method is the constructor of the class.
+     * It initializes the attributes of the class.
+     * It makes the game visible.
+     * It starts the timer, which is responsible for the game's speed.
+     * It also adds the key listener to the game.
+     * It also adds the action listener to the timer.
+     * @param cWindow The main window of the game.
+     * @author Gergo Buzas
+     */
     public GameController(JFrame cWindow) {
         Constants.BOMB_FREQ = 1000;
         multiplier = 1;
@@ -43,6 +59,14 @@ public class GameController extends JPanel{
         newRound();
     }
 
+    /**
+     * This method starts a new round.
+     * It initializes the attributes of the class.
+     * It also adds the aliens to the game.
+     * It also adds the player to the game.
+     * It also resets the aliens' death counter.
+     * @author Gergo Buzas
+     */
     private void newRound() {
         aliens = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -56,8 +80,11 @@ public class GameController extends JPanel{
     }
 
 
-
-    //DRAWINGS
+    /**
+     * This method paints the aliens.
+     * @param g The graphics object of the game. It is used to draw the aliens.
+     * @author Gergo Buzas
+     */
     private void drawAliens(Graphics g) {
         for (AlienShip alien : aliens) {
             if (alien.getDestroyed()) {
@@ -68,18 +95,33 @@ public class GameController extends JPanel{
         }
     }
 
+    /**
+     * This method draws the player's ship.
+     * @param g The graphics object of the game. It is used to draw the player's ship.
+     * @author Gergo Buzas
+     */
     private void drawPlayer(Graphics g) {
         if (!player.getDestroyed()) {
             g.drawImage(player.getImage(), player.getX(), player.getY(), this);
         }
     }
 
+    /**
+     * This method draws the player's bullet.
+     * @param g The graphics object of the game. It is used to draw the bullet.
+     * @author Gergo Buzas
+     */
     private void drawPlayerBullet(Graphics g) {
         if (!player.getBullet().getDestroyed()) {
             g.drawImage(player.getBullet().getImage(), player.getBullet().getX(), player.getBullet().getY(), this);
         }
     }
 
+    /**
+     * This method draws the aliens' bullets.
+     * @param g The graphics object. It is used to draw the bullets.
+     * @author Gergo Buzas
+     */
     private void drawAlienBullets(Graphics g) {
         for (AlienShip alien : aliens) {
             AlienBullet b = alien.getBullet();
@@ -89,11 +131,17 @@ public class GameController extends JPanel{
         }
     }
 
+    /**
+     * This method draws the score.
+     * @param g The graphics object of the game. It is used to draw the score.
+     * @author Gergo Buzas
+     */
     private void drawScore(Graphics g) {
         g.setColor(Color.white);
         g.setFont(new Font("Helvetica", Font.BOLD, 20));
         g.drawString("Score: " + score, 30, 935);
     }
+
 
     @Override
     public void paintComponent(Graphics g) {
@@ -105,6 +153,18 @@ public class GameController extends JPanel{
         }
     }
 
+    /**
+     * This method draws the game.
+     * It draws the aliens.
+     * It draws the player.
+     * It draws the player's bullet.
+     * It draws the aliens' bullets.
+     * It draws the score.
+     * It is in sync by the "Toolkit.getDefaultToolkit().sync()" method.
+     * @param g The graphics object of the game.
+     * @throws IOException If the image file is not found.
+     * @author Gergo Buzas
+     */
     private void doDrawing(Graphics g) throws IOException {
         g.setColor(Color.black);
         g.fillRect(0, 0, Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT);
@@ -126,6 +186,14 @@ public class GameController extends JPanel{
         Toolkit.getDefaultToolkit().sync();
     }
 
+    /**
+     * This method is called when the game is over.
+     * It sends the game over message.
+     * If the score is in the top 10 highest, it asks the player's name, so that their name can be put on the leaderboard.
+     * If the score is not in the top 10 highest, it just sends the game over message.
+     * @throws IOException If the image file is not found.
+     * @author Gergo Buzas
+     */
     private void gameOver() throws IOException {
         for (int i = 0; i < LeaderBoard.getTop10List().size(); i++) {
             if (score > LeaderBoard.getTop10List().get(i).getScore()) {
@@ -136,7 +204,12 @@ public class GameController extends JPanel{
         gameOverNotTop10(this.mainWindow);
     }
 
-
+    /**
+     * This method is called when the score is in the top 10 highest.
+     * @param idx The index of the score in the top 10 highest. It is used to put the player's name on the leaderboard.
+     * @throws IOException If the score cannot be saved to top10.txt
+     * @author Gergo Buzas
+     */
     private void gameOverTop10(int idx) throws IOException {
         String name = JOptionPane.showInputDialog("You got the "+ (idx + 1) + ". highest score!\nEnter your name:");
         LeaderBoard.getTop10List().add(idx, new LeaderBoard.Score(name, score));
@@ -145,6 +218,12 @@ public class GameController extends JPanel{
         mainWindow.setVisible(false);
     }
 
+    /**
+     * This method is called when the score is not in the top 10 highest.
+     * @param mainWindow The main window of the game. It is used to close the main window (Game) after pressing the "OK" button.
+     * @throws IOException If the image file is not found.
+     * @author Gergo Buzas
+     */
     private void gameOverNotTop10(JFrame mainWindow) throws IOException {
         JFrame gameOverWindow = new JFrame();
         JPanel gameOverScreen = new JPanel();
@@ -176,7 +255,20 @@ public class GameController extends JPanel{
 
 
 
-
+    /**
+     * This method is called to step the game.
+     * It is called by the GameCycle, which is then called by the Timer.
+     * It checks if the game's round is over.
+     * It moves the aliens.
+     * It moves the aliens' bullets.
+     * It moves the player's bullet.
+     * It checks if the player's bullet hits an alien.
+     * It checks if the player's bullet hits an alien's bullet.
+     * It checks if the aliens' bullets hit the player.
+     * It checks if the aliens hit the player.
+     * It checks if the aliens hit the ground.
+     * @author Gergo Buzas
+     */
     private void tick() {
         if (deaths == Constants.NUMBER_OF_ALIENS_TO_DESTROY) {
             if (Constants.BOMB_FREQ > 200) {
@@ -190,7 +282,7 @@ public class GameController extends JPanel{
             newRound();
         }
 
-        // player's bullet
+        //Moves the player's bullet.
         if (!player.getBullet().getDestroyed()) {
             int playerBulletX = player.getBullet().getX();
             int playerBulletY = player.getBullet().getY();
@@ -224,6 +316,7 @@ public class GameController extends JPanel{
                 }
             }
 
+            //Checking whether player's bullet hit the top
             if (player.getBullet().getY() + Constants.MOVE_UP < 0) {
                 player.getBullet().die();
             } else {
@@ -288,11 +381,21 @@ public class GameController extends JPanel{
         }
     }
 
+    /**
+     * This method is called when the timer calls it.
+     * It calls the tick method.
+     * It repaints the game.
+     * @author Gergo Buzas
+     */
     private void doGameCycle() {
         tick();
         repaint();
     }
 
+    /**
+     * This method represents the game's cycle.
+     * @author Gergo Buzas
+     */
     private class GameCycle implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -300,13 +403,27 @@ public class GameController extends JPanel{
         }
     }
 
+
+    /**
+     * This class is used to handle the keyboard input.
+     * @author Gergo Buzas
+     */
     private class TAdapter extends KeyAdapter {
+        /**
+         * This method is called when a key is pressed.
+         * @param e the event to be processed
+         * @author Gergo Buzas
+         */
         @Override
         public void keyPressed(KeyEvent e) {
             player.keyPressed(e);
         }
     }
 
+    /**
+     * This enum represents the direction of the aliens.
+     * @author Gergo Buzas
+     */
     public enum Direction {
         LEFT, RIGHT
     }
