@@ -18,7 +18,7 @@ public class SpaceShip extends BoardObject{
 
     public void shoot(){
         bullet.setDestroyed(false);
-        bullet.setX(x + 50);
+        bullet.setX(x + 43);
         bullet.setY(y - 30);
     }
 
@@ -35,7 +35,13 @@ public class SpaceShip extends BoardObject{
         if (key == KeyEvent.VK_LEFT && x >= Constants.BORDER_LEFT) {
             moveLeft();
         }
+        if (key == KeyEvent.VK_A && x >= Constants.BORDER_RIGHT) {
+            moveLeft();
+        }
         if (key == KeyEvent.VK_RIGHT && x <= Constants.BOARD_WIDTH - Constants.BORDER_RIGHT) {
+            moveRight();
+        }
+        if (key == KeyEvent.VK_D && x <= Constants.BOARD_WIDTH - Constants.BORDER_RIGHT) {
             moveRight();
         }
     }

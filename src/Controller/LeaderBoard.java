@@ -40,7 +40,7 @@ public class LeaderBoard extends JPanel {
         okButton.addActionListener(e -> mainWindow.setVisible(false));
     }
 
-    private static void load() {
+    public static void load() {
         try {
             FileInputStream fileInputStream = new FileInputStream("top10.txt");
             ObjectInputStream in = new ObjectInputStream(fileInputStream);
