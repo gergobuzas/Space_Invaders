@@ -152,15 +152,30 @@ public class LeaderBoard extends JPanel {
         private final String name;
         private final int score;
 
+        /**
+         * This method is the constructor of the class.
+         * It initializes the attributes of the class.
+         * @param s The name of the player.
+         * @param parseInt The score of the player.
+         * @author Gergo Buzas
+         */
         public Score(String s, int parseInt) {
             name = s;
             score = parseInt;
         }
 
+        /**
+         * This method returns the name of the player.
+         * @return The name of the player.
+         */
         public String getName(){
             return name;
         }
 
+        /**
+         * This method returns the score of the player.
+         * @return The score of the player.
+         */
         public int getScore(){
             return score;
         }
