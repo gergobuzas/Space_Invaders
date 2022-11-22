@@ -64,7 +64,7 @@ public class SpaceShip extends BoardObject{
         if (key == KeyEvent.VK_LEFT && x >= Constants.BORDER_LEFT) {
             moveLeft();
         }
-        if (key == KeyEvent.VK_A && x >= Constants.BORDER_RIGHT) {
+        if (key == KeyEvent.VK_A && x >= Constants.BORDER_LEFT) {
             moveLeft();
         }
         if (key == KeyEvent.VK_RIGHT && x <= Constants.BOARD_WIDTH - Constants.BORDER_RIGHT) {
